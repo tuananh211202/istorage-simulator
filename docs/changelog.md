@@ -40,3 +40,33 @@
 - `docs/changelog.md`
 - `app/client/.gitignore`
 - `app/server/.gitignore`
+
+## 2026-03-23
+
+### Phase 2
+
+- documented an internal backend vector search capability based on CLIP-compatible embeddings and Qdrant
+- documented that the embedding model is initialized once at backend startup and reused by services
+- added reusable backend services for CLIP embedding access, Qdrant access, and text-to-image vector retrieval
+- kept the public HTTP API unchanged while preparing backend services for future semantic-search routes
+
+### Why
+
+- add semantic text-to-image retrieval building blocks without changing the current frontend or public API scope
+- avoid repeated model initialization cost by loading the embedding model a single time per process
+- keep vector-search logic reusable from other backend services
+
+### Impacted Areas
+
+- `docs/product-spec.md`
+- `docs/architecture.md`
+- `docs/api-contract.md`
+- `docs/changelog.md`
+- `app/server/requirements.txt`
+- `app/server/app/config.py`
+- `app/server/app/main.py`
+- `app/server/app/schemas.py`
+- `app/server/app/services/__init__.py`
+- `app/server/app/services/clip_model_service.py`
+- `app/server/app/services/qdrant_service.py`
+- `app/server/app/services/vector_search_service.py`

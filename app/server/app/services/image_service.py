@@ -4,6 +4,7 @@ from urllib.parse import quote
 from app.config import IMAGES_DIR, STATIC_IMAGES_ROUTE
 from app.schemas import ImageItem, ImagesResponse
 from app.utils.image_files import is_image_file
+from .vector_search_service import search_image_items_by_text
 
 
 def list_image_files() -> list[Path]:
@@ -29,13 +30,8 @@ def get_images(
     normalized_search = search.strip().lower()
 
     image_paths = list_image_files()
-    filtered_paths = [
-        path
-        for path in image_paths
-        if not normalized_search or normalized_search in path.name.lower()
-    ]
 
-    total_items = len(filtered_paths)
+    total_items = len(image_paths)
     total_pages = 0 if total_items == 0 else (total_items + limit - 1) // limit
     start_index = (page - 1) * limit
     end_index = start_index + limit
@@ -46,8 +42,19 @@ def get_images(
             filename=path.name,
             imageUrl=build_image_url(base_url, path.name),
         )
-        for path in filtered_paths[start_index:end_index]
+        for path in image_paths[start_index:end_index]
     ]
+
+    if len(normalized_search) > 0:
+        search_results = search_image_items_by_text(query_text=normalized_search, limit=100, base_url=base_url)
+        items = [
+            ImageItem(
+                id=item.id,
+                filename=item.filename,
+                imageUrl=item.imageUrl,
+            )
+            for item in search_results[start_index:end_index]
+        ]
 
     return ImagesResponse(
         items=items,

@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,8 +9,16 @@ from fastapi.staticfiles import StaticFiles
 from app.config import ALLOWED_CORS_ORIGINS, IMAGES_DIR
 from app.routes.images import router as images_router
 from app.schemas import ErrorResponse
+from app.services.clip_model_service import warmup_clip_model
 
-app = FastAPI(title="Image Gallery API")
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    warmup_clip_model()
+    yield
+
+
+app = FastAPI(title="Image Gallery API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

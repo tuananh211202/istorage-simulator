@@ -18,6 +18,11 @@ Implementation note for phase 2:
 - support pagination through `page` and `limit`
 - expose static image URLs for browser rendering
 
+## Public HTTP Scope
+
+- The only documented public HTTP endpoint in phase 2 remains `GET /api/images`.
+- Internal vector search services may exist in the backend, but they are not part of the public HTTP contract until a route is documented here.
+
 ## Image Listing Endpoint
 
 - `GET /api/images`
@@ -157,3 +162,4 @@ GET /api/images?search=beach&page=2&limit=10
 - richer metadata
 - persistent database-backed records
 - advanced search behavior beyond filename matching
+- public vector-search HTTP endpoints

@@ -24,6 +24,7 @@ The phase-2 goal is to replace the mocked frontend data flow with a real backend
 - images read from `app/server/images`
 - default initial load of 10 images per page
 - filename-based search
+- internal vector search service for text-to-image retrieval against pre-indexed image embeddings
 - pagination through a "Load more" button
 - image cards displaying the image preview and filename
 - responsive gallery layout
@@ -37,6 +38,7 @@ The phase-2 goal is to replace the mocked frontend data flow with a real backend
 - image deletion or editing
 - admin tools
 - advanced metadata extraction
+- a public HTTP endpoint or frontend flow for vector search
 - sorting options beyond current filesystem order unless later defined
 
 ## Data Model
@@ -82,6 +84,14 @@ No additional metadata should be assumed for this phase unless later documented.
   - the current result list is replaced by the new response
 - If the search field is cleared and resubmitted, the gallery returns to the default unfiltered result set starting from page `1`.
 - Filename matching is the temporary search behavior for phase 2 and does not require any database-backed search logic.
+
+## Internal Vector Search Capability
+
+- The backend also supports an internal service for retrieving images from a natural-language text query.
+- This capability uses CLIP-compatible text and image embeddings together with a Qdrant collection that already contains indexed image vectors.
+- The internal vector search capability is intended for reuse by backend services and future routes.
+- The current phase does not expose vector search directly in the existing frontend gallery flow.
+- If the vector collection is empty or unavailable, the capability should fail clearly instead of silently returning fabricated results.
 
 ## Load More Behavior
 
@@ -138,5 +148,6 @@ The filename is the visible caption for this phase and replaces the previous moc
 - upload workflow for adding images through the application
 - database-backed metadata or indexing
 - richer search behavior beyond filename matching
+- public API and UI integration for vector search
 - image validation and processing pipeline
 - sorting and filtering options beyond the current simple behavior

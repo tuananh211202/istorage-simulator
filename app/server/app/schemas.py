@@ -16,6 +16,17 @@ class ImagesResponse(BaseModel):
     hasMore: bool
 
 
+class VectorSearchImageItem(ImageItem):
+    score: float
+
+
+class VectorSearchResponse(BaseModel):
+    query: str
+    limit: int
+    totalItems: int
+    items: list[VectorSearchImageItem]
+
+
 class ErrorBody(BaseModel):
     code: str
     message: str
