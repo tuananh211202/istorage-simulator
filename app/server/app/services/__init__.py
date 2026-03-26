@@ -12,7 +12,6 @@ from app.services.qdrant_service import (
 )
 from app.services.vector_search_service import (
     search_image_items_by_text,
-    search_images_by_text,
 )
 
 __all__ = [
@@ -23,7 +22,6 @@ __all__ = [
     "get_qdrant_client",
     "query_similar_points",
     "search_image_items_by_text",
-    "search_images_by_text",
     "upsert_points",
     "warmup_clip_model",
 ]

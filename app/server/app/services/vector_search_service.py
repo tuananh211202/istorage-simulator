@@ -68,21 +68,3 @@ def search_image_items_by_text(
 
     return items
 
-
-def search_images_by_text(
-    *,
-    query_text: str,
-    limit: int = VECTOR_SEARCH_DEFAULT_LIMIT,
-    collection_name: str = QDRANT_VECTOR_COLLECTION,
-) -> VectorSearchResponse:
-    items = search_image_items_by_text(
-        query_text=query_text,
-        limit=limit,
-        collection_name=collection_name,
-    )
-    return VectorSearchResponse(
-        query=query_text.strip(),
-        limit=limit,
-        totalItems=len(items),
-        items=items,
-    )
