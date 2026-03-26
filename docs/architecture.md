@@ -38,6 +38,8 @@ The frontend in `app/client` remains responsible for:
 - rendering the gallery page
 - rendering the search bar
 - rendering the image grid and image cards
+- rendering card-level quick actions for detail and add-to-chat
+- rendering and persisting a local bottom chat dock
 - managing loading, empty, error, and pagination states
 - calling the real backend API instead of local mock data
 
@@ -47,6 +49,12 @@ The frontend in `app/client` remains responsible for:
 - On search submit, the frontend calls the backend API with `search`, resets pagination, and replaces the current result set.
 - On "Load more", the frontend calls the backend API for the next page and appends returned items.
 - The image card caption uses `filename`.
+- Image card quick actions are handled entirely in the frontend for this phase.
+- Add-to-chat appends a local image chat entry and persists the updated chat list in `localStorage`.
+- The chat dock composer appends local text messages into the same stored chat list.
+- The frontend also owns lightweight sender metadata so the UI can render user and bot messages differently.
+- The frontend also owns local model-selection state for labeling simulated replies.
+- Simulated model replies are generated entirely in the frontend without a backend request.
 - Frontend API requests should target the backend directly through a configurable base URL.
 - Frontend API requests should bypass browser caching for `/api/images` so the gallery always receives a fresh JSON response.
 
@@ -152,6 +160,7 @@ The backend should use a simple layered structure such as:
 
 - The backend owns filesystem access and API response generation.
 - The frontend owns presentation and request state management.
+- The frontend also owns temporary client-side chat state and its persistence in `localStorage`.
 - The frontend should not inspect local filesystem paths directly.
 - The backend should not embed frontend presentation logic.
 

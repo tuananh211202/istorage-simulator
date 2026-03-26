@@ -1,5 +1,45 @@
 # Changelog
 
+## 2026-03-26
+
+### Phase 2
+
+- documented image-card quick actions for product detail and adding an image to chat
+- documented a responsive bottom chat dock that opens from add-to-chat actions
+- documented local chat persistence through `localStorage`
+- documented a local chat composer for sending text messages inside the chat dock
+- documented sender-specific chat styling and simulated bot echo replies
+- documented auto-scroll behavior and a local model selector for simulated replies
+- updated the frontend to render card actions, append selected images into chat, send text messages, simulate model-labeled echoes, auto-scroll, and restore chat history locally
+- compacted the chat header and composer so the message area keeps more visible space
+- reduced message bubble size and removed the extra chat title text
+- further compacted the model selector and send controls, and vertically centered the header label
+- replaced chat close/send text buttons with compact icons and shortened the visible model selector labels
+- moved the composer into a two-row compact block, removed the send button, and added placeholder upload/mic tools
+- aligned the tool row into left and right sections and made uploaded images append into chat immediately
+- refined the model selector so it stays compact but more legible
+- expanded the model selector again to show clearer model names
+- changed uploaded images into removable pending attachments that send on Enter together with text
+- changed card-level add-to-chat actions to use the same pending-attachment composer flow
+
+### Why
+
+- prepare the gallery cards for product-oriented interactions without introducing backend changes
+- support a lightweight image-to-chat workflow that works on both desktop and mobile layouts
+- preserve temporary chat context across page refreshes in the browser
+
+### Impacted Areas
+
+- `docs/product-spec.md`
+- `docs/ui-states.md`
+- `docs/architecture.md`
+- `docs/changelog.md`
+- `app/client/src/App.tsx`
+- `app/client/src/components/ImageCard.tsx`
+- `app/client/src/components/ImageGrid.tsx`
+- `app/client/src/styles.css`
+- `app/client/src/types.ts`
+
 ## 2026-03-22
 
 ### Phase 1

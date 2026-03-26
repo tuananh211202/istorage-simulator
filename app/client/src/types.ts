@@ -4,6 +4,25 @@ export type ImageItem = {
   imageUrl: string;
 };
 
+export type ImageChatMessage = {
+  id: string;
+  type: "image";
+  sender: "user";
+  image: ImageItem;
+  createdAt: string;
+};
+
+export type TextChatMessage = {
+  id: string;
+  type: "text";
+  sender: "user" | "bot";
+  text: string;
+  createdAt: string;
+  modelName?: string;
+};
+
+export type ChatMessage = ImageChatMessage | TextChatMessage;
+
 export type Pagination = {
   page: number;
   limit: number;
